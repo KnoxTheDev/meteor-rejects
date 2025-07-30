@@ -6,12 +6,10 @@ import anticope.rejects.events.SeedChangedEvent;
 import anticope.rejects.utils.Ore;
 import anticope.rejects.utils.seeds.Seed;
 import anticope.rejects.utils.seeds.Seeds;
-import baritone.api.BaritoneAPI;
 import meteordevelopment.meteorclient.events.render.Render3DEvent;
 import meteordevelopment.meteorclient.events.world.BlockUpdateEvent;
 import meteordevelopment.meteorclient.events.world.ChunkDataEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
-import meteordevelopment.meteorclient.pathing.BaritoneUtils;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.Utils;
@@ -36,7 +34,6 @@ public class OreSim extends Module {
     private final Map<Long, Map<Ore, Set<Vec3d>>> chunkRenderers = new ConcurrentHashMap<>();
     private Seed worldSeed = null;
     private Map<RegistryKey<Biome>, List<Ore>> oreConfig;
-    public List<BlockPos> oreGoals = new ArrayList<>();
 
     public enum AirCheck {
         ON_LOAD,
@@ -62,22 +59,11 @@ public class OreSim extends Module {
             .build()
     );
 
-    private final Setting<Boolean> baritone = sgGeneral.add(new BoolSetting.Builder()
-            .name("baritone")
-            .description("Set baritone ore positions to the simulated ones.")
-            .defaultValue(false)
-            .build()
-    );
-
 
     public OreSim() {
         super(MeteorRejectsAddon.CATEGORY, "ore-sim", "Xray on crack.");
         SettingGroup sgOres = settings.createGroup("Ores");
         Ore.oreSettings.forEach(sgOres::add);
-    }
-
-    public boolean baritone() {
-        return isActive() && baritone.get() && BaritoneUtils.IS_AVAILABLE;
     }
 
     @EventHandler
@@ -129,38 +115,6 @@ public class OreSim extends Module {
                 ore.remove(pos);
             }
         }
-    }
-
-    @EventHandler
-    private void onTick(TickEvent.Pre event) {
-        if (mc.player == null || mc.world == null || oreConfig == null) return;
-
-        if (baritone() && BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().isActive()) {
-            oreGoals.clear();
-            var chunkPos = mc.player.getChunkPos();
-            int rangeVal = 4;
-            for (int range = 0; range <= rangeVal; ++range) {
-                for (int x = -range + chunkPos.x; x <= range + chunkPos.x; ++x) {
-                    oreGoals.addAll(addToBaritone(x, chunkPos.z + range - rangeVal));
-                }
-                for (int x = -range + 1 + chunkPos.x; x < range + chunkPos.x; ++x) {
-                    oreGoals.addAll(this.addToBaritone(x, chunkPos.z - range + rangeVal + 1));
-                }
-            }
-        }
-    }
-
-    private ArrayList<BlockPos> addToBaritone(int chunkX, int chunkZ) {
-        ArrayList<BlockPos> baritoneGoals = new ArrayList<>();
-        long chunkKey = ChunkPos.toLong(chunkX, chunkZ);
-        if (this.chunkRenderers.containsKey(chunkKey)) {
-            this.chunkRenderers.get(chunkKey).entrySet().stream()
-                    .filter(entry -> entry.getKey().active.get())
-                    .flatMap(entry -> entry.getValue().stream())
-                    .map(BlockPos::ofFloored)
-                    .forEach(baritoneGoals::add);
-        }
-        return baritoneGoals;
     }
 
     @Override

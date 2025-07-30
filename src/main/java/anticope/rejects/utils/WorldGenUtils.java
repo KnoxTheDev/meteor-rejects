@@ -2,7 +2,6 @@ package anticope.rejects.utils;
 
 import anticope.rejects.utils.seeds.Seed;
 import anticope.rejects.utils.seeds.Seeds;
-import baritone.api.BaritoneAPI;
 import cubitect.Cubiomes;
 
 import com.seedfinding.mcbiome.source.BiomeSource;
@@ -189,22 +188,7 @@ public class WorldGenUtils {
     }
 
     private static BlockPos locateFeatureBlocks(Feature feature) {
-        List<Block> blocks = FEATURE_BLOCKS.get(feature);
-        if (blocks == null) return null;
-        List<BlockPos> posList = BaritoneAPI
-            .getProvider()
-            .getWorldScanner()
-            .scanChunkRadius(
-                BaritoneAPI
-                    .getProvider()
-                    .getPrimaryBaritone()
-                    .getPlayerContext(),
-            blocks,64,10,32);
-        if (posList.isEmpty()) return null;
-        if (posList.size() < 5) {
-            ChatUtils.warningPrefix("Locate", "Only %d block(s) found. This search might be a false positive.", posList.size());
-        }
-        return posList.get(0);
+        return null;
     }
 
     private static BlockPos locateFeatureEntities(Feature feature) {

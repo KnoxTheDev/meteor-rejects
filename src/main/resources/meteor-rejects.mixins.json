@@ -25,8 +25,7 @@
     "StructureVoidBlockMixin",
     "TexturedRenderLayersMixin",
     "ToastManagerMixin",
-    "VehicleMoveC2SPacketAccessor",
-    "baritone.MineProcessMixin"
+    "VehicleMoveC2SPacketAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

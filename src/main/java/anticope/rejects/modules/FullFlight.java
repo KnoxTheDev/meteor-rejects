@@ -82,7 +82,7 @@ public class FullFlight extends Module {
                 shouldFlyDown(currentY, this.lastPacketY) && isEntityOnAir(mc.player)) {
             // actual check is for >= -0.03125D, but we have to do a bit more than that
             // due to the fact that it's a bigger or *equal* to, and not just a bigger than
-            ((PlayerMoveC2SPacketAccessor) packet).setY(lastPacketY - 0.03130D);
+            //((PlayerMoveC2SPacketAccessor) packet).setY(lastPacketY - 0.03130D);
             lastPacketY -= 0.03130D;
             delayLeft = 20;
         } else {
@@ -136,7 +136,7 @@ public class FullFlight extends Module {
     private void onPlayerMove(PlayerMoveEvent event) {
         if (antiKickMode.get() == AntiKickMode.PaperNew) {
             // Resend movement packets
-            ((ClientPlayerEntityAccessor) mc.player).setTicksSinceLastPositionPacketSent(20);
+            //((ClientPlayerEntityAccessor) mc.player).setTicksSinceLastPositionPacketSent(20);
         }
         if (floatingTicks >= 20) {
             switch (antiKickMode.get()) {

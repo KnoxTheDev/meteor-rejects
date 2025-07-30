@@ -50,7 +50,6 @@ public class MeteorRejectsAddon extends MeteorAddon {
         modules.add(new BoatPhase());
         modules.add(new Boost());
         modules.add(new BungeeCordSpoof());
-        modules.add(new ChatBot());
         modules.add(new ChestAura());
         modules.add(new ChorusExploit());
         modules.add(new ColorSigns());
@@ -63,7 +62,6 @@ public class MeteorRejectsAddon extends MeteorAddon {
         modules.add(new GhostMode());
         modules.add(new Glide());
         modules.add(new ItemGenerator());
-        modules.add(new InteractionMenu());
         modules.add(new Jetpack());
         modules.add(new KnockbackPlus());
         modules.add(new LawnBot());

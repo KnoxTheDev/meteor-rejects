@@ -36,8 +36,7 @@ public class GameRendererMixin {
         PostEffectProcessor shader = renderingModule.getShaderEffect();
 
         if (shader != null) {
-//            shader.setupDimensions(client.getWindow().getFramebufferWidth(), client.getWindow().getFramebufferHeight());
-            shader.render(this.client.getFramebuffer(),this.pool,this.consumer);
+            //shader.render(tickCounter.getTickDelta());
         }
     }
 }

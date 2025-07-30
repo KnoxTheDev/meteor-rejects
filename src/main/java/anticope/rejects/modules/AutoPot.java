@@ -3,7 +3,6 @@ package anticope.rejects.modules;
 //import baritone.api.BaritoneAPI;
 
 import anticope.rejects.MeteorRejectsAddon;
-import baritone.api.BaritoneAPI;
 import meteordevelopment.meteorclient.events.entity.player.ItemUseCrosshairTargetEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
@@ -68,13 +67,6 @@ public class AutoPot extends Module {
             .build()
     );
 
-    private final Setting<Boolean> pauseBaritone = sgGeneral.add(new BoolSetting.Builder()
-            .name("pause-baritone")
-            .description("Pause baritone when eating.")
-            .defaultValue(true)
-            .build()
-    );
-
     private final Setting<Boolean> lookDown = sgGeneral.add(new BoolSetting.Builder()
             .name("rotate")
             .description("Forces you to rotate downwards when throwing splash potions.")
@@ -85,7 +77,6 @@ public class AutoPot extends Module {
     private int slot, prevSlot;
     private boolean drinking, splashing;
     private final List<Class<? extends Module>> wasAura = new ArrayList<>();
-    private boolean wasBaritone;
 
     public AutoPot() {
         super(MeteorRejectsAddon.CATEGORY, "auto-pot", "Automatically Drinks Potions");
@@ -156,9 +147,6 @@ public class AutoPot extends Module {
                 }
             }
         }
-        if (pauseBaritone.get() && wasBaritone) {
-            BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
-        }
     }
 
     private double trueHealth() {
@@ -213,11 +201,6 @@ public class AutoPot extends Module {
                     module.toggle();
                 }
             }
-        }
-        wasBaritone = false;
-        if (pauseBaritone.get() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
-            wasBaritone = true;
-            BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
         }
     }
 
