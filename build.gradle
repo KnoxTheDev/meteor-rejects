@@ -42,7 +42,7 @@ dependencies {
 
 	modImplementation("meteordevelopment:meteor-client:${project.minecraft_version}-SNAPSHOT")
 	modCompileOnly "meteordevelopment:baritone:${project.baritone_version}-SNAPSHOT"
-    implementation "org.meteordev:starscript:0.2.3"
+    implementation "org.meteordev:starscript:0.3.4"
 	// seed .locate and ore sim
 	extraLibs('com.seedfinding:mc_math:851e9d0577dfdca50154e98f1d334bd31c641326') { transitive = false }
 	extraLibs('com.seedfinding:mc_seed:55f6242001f7eb4226df4ed0d023f1838a54a99d') { transitive = false }
