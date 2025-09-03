@@ -7,7 +7,10 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.command.CommandSource;
+
+import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class ReconnectCommand extends Command {
     public ReconnectCommand() {
@@ -18,10 +21,16 @@ public class ReconnectCommand extends Command {
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
             ServerInfo info = mc.isInSingleplayer() ? null : mc.getCurrentServerEntry();
-            if (info != null) {
-                mc.world.disconnect();
-                ConnectScreen.connect(new MultiplayerScreen(new TitleScreen()), mc,
-                        ServerAddress.parse(info.address), info, false, null);
+            if (info != null && mc.level != null) {
+                mc.level.disconnect(new TextComponent("Reconnecting...")); // fixed disconnect call
+                ConnectScreen.connect(
+                        new MultiplayerScreen(new TitleScreen()), 
+                        mc,
+                        ServerAddress.parse(info.address), 
+                        info, 
+                        false, 
+                        null
+                );
             }
             return SINGLE_SUCCESS;
         });

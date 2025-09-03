@@ -19,13 +19,7 @@ import java.util.Set;
 
 public class CleanUpScreen extends WindowScreen {
     private final MultiplayerScreen multiplayerScreen;
-    private final WCheckbox removeAll;
-    private final WCheckbox removeFailed;
-    private final WCheckbox removeOutdated;
-    private final WCheckbox removeUnknown;
-    private final WCheckbox removeGriefMe;
-    private final WCheckbox removeDuplicates;
-    private final WCheckbox rename;
+    private final WCheckbox removeAll, removeFailed, removeOutdated, removeUnknown, removeGriefMe, removeDuplicates, rename;
 
     public CleanUpScreen(GuiTheme theme, MultiplayerScreen multiplayerScreen, Screen parent) {
         super(theme, "Clean Up");
@@ -97,12 +91,11 @@ public class CleanUpScreen extends WindowScreen {
 
     private boolean isUnknownHost(ServerInfo server) {
         if (server.label == null || server.label.getString() == null) return false;
-
         return server.label.getString().equals("\u00a74Can't resolve hostname");
     }
 
     private boolean isSameProtocol(ServerInfo server) {
-        return server.protocolVersion == SharedConstants.getGameVersion().getProtocolVersion();
+        return server.protocolVersion == SharedConstants.getCurrentVersion().getProtocolVersion();
     }
 
     private boolean isFailedPing(ServerInfo server) {
@@ -115,9 +108,7 @@ public class CleanUpScreen extends WindowScreen {
 
     private void saveServerList() {
         multiplayerScreen.getServerList().saveFile();
-
         MultiplayerServerListWidget serverListSelector = ((MultiplayerScreenAccessor) multiplayerScreen).getServerListWidget();
-
         serverListSelector.setSelected(null);
         serverListSelector.setServers(multiplayerScreen.getServerList());
     }

@@ -2,7 +2,6 @@ package anticope.rejects;
 
 import anticope.rejects.commands.*;
 import anticope.rejects.gui.hud.RadarHud;
-import anticope.rejects.gui.themes.rounded.MeteorRoundedGuiTheme;
 import anticope.rejects.modules.*;
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
@@ -58,7 +57,6 @@ public class MeteorRejectsAddon extends MeteorAddon {
         modules.add(new CoordLogger());
         modules.add(new CustomPackets());
         modules.add(new ExtraElytra());
-        modules.add(new FullFlight());
         modules.add(new GamemodeNotifier());
         modules.add(new GhostMode());
         modules.add(new Glide());
@@ -70,7 +68,6 @@ public class MeteorRejectsAddon extends MeteorAddon {
         modules.add(new Lavacast());
         modules.add(new MossBot());
         modules.add(new NewChunks());
-        modules.add(new NoJumpDelay());
         modules.add(new ObsidianFarm());
         modules.add(new OreSim());
         modules.add(new PacketFly());
@@ -107,9 +104,6 @@ public class MeteorRejectsAddon extends MeteorAddon {
         // HUD
         Hud hud = Systems.get(Hud.class);
         hud.register(RadarHud.INFO);
-
-        // Themes
-        GuiThemes.add(new MeteorRoundedGuiTheme());
     }
 
     @Override
